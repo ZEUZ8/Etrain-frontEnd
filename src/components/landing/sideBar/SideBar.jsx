@@ -17,7 +17,7 @@ const SideBar = () => {
   const [complaints,setComplaints] = useState(false)
   const [exams,setExams] = useState(false)
   const [notification,setNotification] = useState('')
-  const socket = io("http://localhost:4000");
+  const socket = io("https://etrain-z30o.onrender.com");
 
   const handleLogOut = () => {
     dispatch(userLogOut());
