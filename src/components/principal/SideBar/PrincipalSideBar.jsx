@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { principalLogout } from "../../../redux/principal";
 import { Link, useNavigate } from "react-router-dom";
 import { GrFormCalendar } from "react-icons/gr";
+import {AiOutlineMessage} from "react-icons/ai"
 import {io} from "socket.io-client"
  
 const SideBar = () => {
@@ -13,7 +14,8 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const socket = io("https://etrain-z30o.onrender.com");
-  const socket = io("http://localhost:4000");
+  const socket = io("https://etrain-z30o.onrender.com");
+  // const socket = io("http://localhost:4000");
 
   const handleLogOut = () => {
     dispatch(principalLogout());
@@ -27,14 +29,14 @@ const SideBar = () => {
     socket.emit("addUser", (res) => {
       console.log(res, "class");
     });
-    socket.on("getNotify", (res) => {
-      setMsg(res?.text);
-      if (id === res?.receiverId) {
-        setNotify(res.read);
-      }
-    });
-  }, [msg]);
-
+  },[]);
+  
+  socket.on("getNotify", (res) => {
+    setMsg(res?.text);
+    if (id === res?.receiverId) {
+      setNotify(res.read);
+    }
+  });
   useEffect(() => {
     setNotify(true);
   }, []);
@@ -229,6 +231,9 @@ const SideBar = () => {
                     ></path>
                   </svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">Chat</span>
+                  <span>
+                    {!notify && <AiOutlineMessage className="text-green-600" />}
+                  </span>
                 </a>
               </li>
             </Link>

@@ -103,7 +103,8 @@ const Chat = ({ user }) => {
   }, [arrivalMessage, currentChat]);
 
   // socket.current = io("https://etrain-z30o.onrender.com");
-  socket.current = io("http://localhost:4000");
+  socket.current = io("https://etrain-z30o.onrender.com");
+  // socket.current = io("http://localhost:4000");
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser.id);
