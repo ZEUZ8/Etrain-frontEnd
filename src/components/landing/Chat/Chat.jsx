@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import {BsFillSendFill} from "react-icons/bs"
+import { BsFillSendFill } from "react-icons/bs";
 
 import {
   CreateTeacherMessages,
@@ -13,6 +13,7 @@ import {
   GetPrincipalConversation,
   GetPrincipalMessages,
   GetPrincipal,
+  CreatePrincipalMessages,
 } from "../../../axios/services/principalServices/principlaServices";
 import {
   CreateStudentMessages,
@@ -43,7 +44,7 @@ const Chat = ({ user }) => {
   const [newMessages, setNewMessages] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [member, setMember] = useState("");
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const errMsgs = ["jwt expired", "Acces Denied", "jwt malformed"];
 
@@ -51,17 +52,19 @@ const Chat = ({ user }) => {
   const socket = useRef();
   const navigate = useNavigate();
 
-  const currentUser =
-    user === "student"
-      ? studentData
-      : user === "teacher"
-      ? teacherData
-      : pricnipalData;
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
+    setCurrentUser(
+      user === "student"
+        ? studentData
+        : user === "teacher"
+        ? teacherData
+        : pricnipalData
+    );
     const fetchData = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         if (user === "student") {
           const response = await GetStudent(studentToken, studentId);
           if (errMsgs.some((msg) => msg === response.msg || response.message)) {
@@ -87,10 +90,11 @@ const Chat = ({ user }) => {
       } catch (err) {
         console.log(err);
       }
-      setLoading(false)
+      setLoading(false);
     };
     fetchData();
   }, [user]);
+
 
   useEffect(() => {
     arrivalMessage &&
@@ -98,15 +102,14 @@ const Chat = ({ user }) => {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  socket.current = io("https://etrain-z30o.onrender.com");
+  // socket.current = io("https://etrain-z30o.onrender.com");
+  socket.current = io("http://localhost:4000");
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser.id);
-    socket.current.on("getNotify",(res)=>{
-    })
-    socket.current.on("getUsers", (users) => {
-    });
+    socket.current.on("getUsers", (users) => {});
   }, [currentUser]);
+
 
   useEffect(() => {
     socket.current.on("getMessage", (res) => {
@@ -122,7 +125,7 @@ const Chat = ({ user }) => {
 
   useEffect(() => {
     const GetConversations = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         if (user === "student") {
           var response = await GetStudentConversation(studentToken, studentId);
@@ -138,7 +141,7 @@ const Chat = ({ user }) => {
       } catch (error) {
         console.log(error);
       }
-      setLoading(false)
+      setLoading(false);
     };
     GetConversations();
   }, [user]);
@@ -154,18 +157,20 @@ const Chat = ({ user }) => {
           principalToken,
           currentChat?._id
         );
+        console.log(response,'the principal chat')
       }
       setMessages(response);
     };
     getmsgs();
   }, [currentChat]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-      sender: currentUser.id,
+      sender: currentUser?.id,
       text: newMessages,
-      conversationId: currentChat._id,
+      conversationId: currentChat?._id,
     };
     // console.log(currentChat.members,"the user")
 
@@ -178,13 +183,14 @@ const Chat = ({ user }) => {
       receiverId,
       text: newMessages,
     });
+    console.log(currentChat?.id, "the ida");
     try {
       if (user === "student") {
         var response = await CreateStudentMessages(studentToken, message);
       } else if (user === "teacher") {
         var response = await CreateTeacherMessages(teacherToken, message);
       } else {
-        console.log("principal is the user");
+        var response = await CreatePrincipalMessages(principalToken,message)
       }
       setMessages([...messages, response]);
       setNewMessages("");
@@ -236,7 +242,12 @@ const Chat = ({ user }) => {
               </div>
               {conversations?.map((c) => (
                 <div key={c?._id} onClick={() => setCurrentChat(c)}>
-                  <Conversation conversation={c} currentUser={currentUser} loading={loading}/>
+                  <Conversation
+                    conversation={c}
+                    currentUser={currentUser}
+                    loading={loading}
+                    currentChat={currentChat}
+                  />
                 </div>
               ))}
             </div>
@@ -251,10 +262,10 @@ const Chat = ({ user }) => {
                   <div class="flex flex-col mt-5">
                     {messages?.map((m) => {
                       return (
-                        <React.Fragment key={m._id}>
+                        <React.Fragment key={m?._id}>
                           <Message
                             message={m}
-                            owned={m.sender === currentUser.id}
+                            owned={m?.sender === currentUser?.id}
                           />
                         </React.Fragment>
                       );
@@ -275,7 +286,7 @@ const Chat = ({ user }) => {
                       onClick={handleSubmit}
                       disabled={!newMessages}
                     >
-                      <BsFillSendFill className="w-8 h-8 text-red-400"/>
+                      <BsFillSendFill className="w-8 h-8 text-red-400" />
                     </button>
                   </div>
                 </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogOut } from "../../../redux/studentSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -11,13 +11,17 @@ import { GrSchedules } from "react-icons/gr"
 
 const SideBar = () => {
 
+
+  const studentData = useSelector((state)=> state.studentReducer)
+  const {id} = studentData?.id
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [reviews,setReviews] = useState(false)
   const [complaints,setComplaints] = useState(false)
   const [exams,setExams] = useState(false)
-  const [notification,setNotification] = useState('')
-  const socket = io("https://etrain-z30o.onrender.com");
+  // const socket = io("https://etrain-z30o.onrender.com");
+  const socket = io("http://localhost:4000");
 
   const handleLogOut = () => {
     dispatch(userLogOut());
@@ -32,8 +36,10 @@ const SideBar = () => {
       console.log(res,'class')
     })
     socket.on("getNotify",(res)=>{
-      setNotify(res.read)
       setMsg(res?.text)
+      if(id === res?.receiverId){
+        setNotify(res.read)
+      }
     })
   },[msg])
 

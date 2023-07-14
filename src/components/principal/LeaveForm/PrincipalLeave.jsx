@@ -150,7 +150,7 @@ const PrincipalLeave = () => {
                 </div>
               ) : (
                 <div>
-                  <p>No Student Leaves Found</p>
+                  <p className="text-center">No Student Leaves Found</p>
                 </div>
               )}
             </div>
