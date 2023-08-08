@@ -104,6 +104,7 @@ const ProfileEidtPrincipal = ({ setIsOn, principal, loading, handleUpdation }) =
                           value={values.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
+                          readOnly
                         />
                         {errors.email && touched.email && (
                           <p className="text-red-600">{errors.email}</p>

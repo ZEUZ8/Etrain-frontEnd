@@ -27,6 +27,7 @@ const DataShowcase = ({ page }) => {
   const [currentData, setCurrentData] = useState("");
   const [data, setData] = useState([]);
   const [isOn, setIsOn] = useState(false);
+  const [change,setChange] = useState('')
 
   const [reviews, setReviews] = useState([]);
   const [complaints, setComplaints] = useState([]);
@@ -78,7 +79,6 @@ const DataShowcase = ({ page }) => {
           } else if (response?.msg === "succesfull") {
             setExams(response?.exams);
           } else {
-            console?.log("enterd the inthe laskdf");
             toast?.error(response?.msg);
           }
         }
@@ -117,7 +117,7 @@ const DataShowcase = ({ page }) => {
     setCurrentData(data);
   };
 
-  console.log(currentData, "the current datq");
+
 
   return (
     <div>
@@ -325,13 +325,13 @@ const DataShowcase = ({ page }) => {
               {page}
             </p>
             <div class="mb-3 mx-10">
-              <input
-                readOnly
+              {/* <input
                 type="search"
                 class="relative m-0 block w-full min-w-0 flex-auto rounded-md bg-gray-100 shadow-2xl bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-gray-700 dark:placeholder:text-gray-700 dark:focus:border-primary"
                 id="exampleSearch"
                 placeholder="Search"
-              />
+                onChange={(e)=>setChange(e.target.value)}
+              /> */}
             </div>
             {loading && <Loader />}
             {dataToDisplay?.length > 0 ? (

@@ -103,8 +103,9 @@ const Chat = ({ user }) => {
   }, [arrivalMessage, currentChat]);
 
   // socket.current = io("https://etrain-z30o.onrender.com");
-  socket.current = io("https://etrain-z30o.onrender.com");
-  // socket.current = io("http://localhost:4000");
+
+  // socket.current = io("https://etrain-z30o.onrender.com");
+  socket.current = io("http://localhost:4000");
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser.id);
@@ -146,6 +147,9 @@ const Chat = ({ user }) => {
     };
     GetConversations();
   }, [user]);
+
+
+  console.log(conversations,' the converstaion in the result')
 
   useEffect(() => {
     const getmsgs = async () => {
@@ -235,11 +239,11 @@ const Chat = ({ user }) => {
           <div class="flex flex-row justify-between bg-white">
             <div class="flex flex-col w-2/5 border-r-2 overflow-y-auto">
               <div class="border-b-2 py-4 px-2">
-                <input
+                {/* <input
                   type="text"
                   placeholder="search chatting"
                   class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
-                />
+                /> */}
               </div>
               {conversations?.map((c) => (
                 <div key={c?._id} onClick={() => setCurrentChat(c)}>
