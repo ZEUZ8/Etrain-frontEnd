@@ -10,7 +10,7 @@ import { GiProgression } from "react-icons/gi";
 import { GrSchedules } from "react-icons/gr";
 
 const SideBar = () => {
-  const socket = io("http://localhost:4000");
+  // const socket = io("http://localhost:4000");
 
   const studentData = useSelector((state) => state.studentReducer);
   const { id } = studentData?.id;
@@ -20,7 +20,7 @@ const SideBar = () => {
   const [reviews, setReviews] = useState(false);
   const [complaints, setComplaints] = useState(false);
   const [exams, setExams] = useState(false);
-  // const socket = io("https://etrain-z30o.onrender.com");
+  const socket = io("https://etrain-z30o.onrender.com");
 
   // const socket = io("https://etrain-z30o.onrender.com");
 
