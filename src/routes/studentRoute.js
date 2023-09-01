@@ -1,12 +1,11 @@
-import React from "react"
-import {Routes,Route} from "react-router-dom"
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Home from "../components/landing/home/home"
-import Attendence from "../components/students/attendence/Attendence"
-
+import Home from "../components/landing/home/home";
+import Attendence from "../components/students/attendence/Attendence";
 
 import StudentProfile from "../pages/students/profile/StudentProfile";
-import Login from "../pages/students/login/studentLoginPage"
+import Login from "../pages/students/login/studentLoginPage";
 import StudentTimeTable from "../pages/students/timeTable/StudentTimeTable";
 import DataShowcasePage from "../pages/students/DataShowcase/DataShowcasePage";
 import LeaveFormPage from "../pages/common/leaveForm/LeaveFormPage";
@@ -16,34 +15,56 @@ import ErrorPage from "../pages/common/Error/ErrorPage";
 import { useSelector } from "react-redux";
 import ProgressPage from "../pages/students/progress/ProgressPage";
 import ContactPage from "../pages/common/contact/ContactPage";
+import PrivateRoute from "../utils/student/PrivateRoutes";
 
-function StudentRoutes(){
+function StudentRoutes() {
+  const studentData = useSelector((state) => state.studentReducer);
+  const token = studentData?.token;
+  const id = studentData?.id;
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login userType="student" />}></Route>
+        
+        <Route element={<PrivateRoute />}>
+          <Route path="/contact" element={<ContactPage />}></Route>
+          <Route
+            path="/profile"
+            element={<StudentProfile user="student" />}
+          ></Route>
+          <Route path="/attendence" element={<Attendence />}></Route>
+          <Route path="/timetable" element={<StudentTimeTable />}></Route>
+          <Route
+            path="/exams"
+            element={<DataShowcasePage page="exams" />}
+          ></Route>
+          <Route
+            path="/complaints"
+            element={<DataShowcasePage page="complaints" />}
+          ></Route>
+          <Route
+            path="/reviews"
+            element={<DataShowcasePage page="reviews" />}
+          ></Route>
+          <Route
+            path="/leave"
+            element={<LeaveFormPage user="student" />}
+          ></Route>
+          <Route path="/chat" element={<ChatPage user="student" />}></Route>
+          <Route path="/teachers" element={<Teachers user="student" />}></Route>
+          <Route
+            path="/progress"
+            element={<ProgressPage user="student" />}
+          ></Route>
+        </Route>
 
-    const studentData = useSelector(state => state.studentReducer)
-    const token = studentData?.token
-    const id = studentData?.id
-    return (
-        <div>
-            <Routes>
-                <Route path="/" element={< Home />}></Route>
-                <Route path="/contact" element={< ContactPage />}></Route>
-                {/* {token ? <Route path="/" element={<Home />} /> : <Route path="/login" element={<Login userType="student" />} />} */}
-                <Route path="/login" element={< Login userType="student" />}></Route>
-                <Route path="/profile" element={< StudentProfile user="student" />}></Route>
-                <Route path="/attendence" element={< Attendence />}></Route>
-                <Route path="/timetable" element={< StudentTimeTable />}></Route>
-                <Route path="/exams" element={< DataShowcasePage page="exams"/>}></Route>
-                <Route path="/complaints" element={< DataShowcasePage page="complaints"/>}></Route>
-                <Route path="/reviews" element={< DataShowcasePage page="reviews"/>}></Route>
-                <Route path="/leave" element={<LeaveFormPage user="student"/>}></Route>
-                <Route path="/chat" element={<ChatPage user="student"/>}></Route>
-                <Route path="/teachers" element={<Teachers user="student"/>}></Route>
-                <Route path="/progress" element={<ProgressPage user="student"/>}></Route>
-                <Route path="/*" element={< ErrorPage user="principal" />}></Route>
+          <Route path="/*" element={<ErrorPage user="principal" />}></Route>
 
-            </Routes>
-        </div>
-    )
+        {/* {token ? <Route path="/" element={<Home />} /> : <Route path="/login" element={<Login userType="student" />} />} */}
+      </Routes>
+    </div>
+  );
 }
 
-export default StudentRoutes
+export default StudentRoutes;

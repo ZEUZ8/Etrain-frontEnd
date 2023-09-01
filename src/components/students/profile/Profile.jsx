@@ -65,11 +65,11 @@ const Profile = () => {
   }, []);
 
   useEffect(()=>{
-    const fetchData = async()=>{
+    const dataFetch = async()=>{
       setLoading(true)
       try{
         const response = await GetMonthlyAttendance(token)
-        if(errMsgs.some((msg)=> msg === response.msg || response.message)){
+        if(errMsgs.some((msg)=> msg === response?.msg || response?.message)){
           navigate('/login')
         }else if(response && response.length>0){
           setMonthlyAttendance(response)
@@ -79,7 +79,7 @@ const Profile = () => {
       }
       setLoading(false)
     }
-    fetchData()
+    dataFetch()
   },[])
 
 

@@ -74,7 +74,7 @@ export const GetAttandence = async (token)=>{
         return response.data
     }catch(error){
         console.log(error)
-        return({msg:error.response.data})
+        return({msg:error.response})
     }
 }
 
@@ -197,7 +197,7 @@ export const GetStudent = async(token,id)=>{
         return(response.data)
     }catch(error){
         console.log(error)
-        return(error.response.data)
+        return(error?.response?.data)
     }
 }
 
@@ -334,7 +334,7 @@ export const GetStudentMessages = async(token,id)=>{
         return(response.data)
     }catch(error){
         console.log(error)
-        return(error.response.data)
+        return(error?.response?.data)
     }
 }
 
@@ -377,7 +377,7 @@ export const GetMonthlyAttendance = async(token,id)=>{
         return(response.data)
     }catch(error){
         console.log(error)
-        return(error.response.data)
+        return(error.response)
     }
 }
 

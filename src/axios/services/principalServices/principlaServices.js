@@ -1,7 +1,5 @@
 import { axiosPrincipalInstance } from "../../axios";
-import axios from "axios";
-import { store } from "../../../redux/store";
-import { persistStore } from "redux-persist";
+import authToken from "../../../utils/principal/authToken"
 
 
 // let token; // Declare the token variable outside the callback function
@@ -35,12 +33,6 @@ import { persistStore } from "redux-persist";
 // }
 
 // setupAxiosInterceptors()
-
-
-
-
-
-
 
 /*  -----------------------------------------------------------------------------*/
 
@@ -499,6 +491,7 @@ export const principalChatMember = async (token, id) => {
 /* service function for getting chat persons  for principal
  */
 export const PrincipalAllAttendance = async (token, date) => {
+
   console.log("entered in conversation finding function");
   const config = {
     headers: {
@@ -538,6 +531,6 @@ export const GetStudents = async (token, id) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    return error.response.data;
+    return error?.response?.data;
   }
 };

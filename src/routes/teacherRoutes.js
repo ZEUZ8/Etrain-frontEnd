@@ -22,31 +22,35 @@ function TeacherRoutes() {
         <Route path="/login" element={<Login userType="teacher" />}></Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<DashBoard user="teacher" /> }></Route>
+          <Route path="/" element={<DashBoard user="teacher" />}></Route>
+          <Route
+            path="/weeklyTasks"
+            element={<TeacherWeeklyTasksPage />}
+          ></Route>
+          <Route path="/attandence" element={<TeacherAttadencePage />}></Route>
+          <Route
+            path="/reviews"
+            element={<TeacherComplaintsPage page="review" />}
+          ></Route>
+          <Route
+            path="/complaints"
+            element={<TeacherComplaintsPage page="complaint" />}
+          ></Route>
+          <Route path="/students" element={<TeacherStudentsPage />}></Route>
+          <Route path="/exams" element={<TeacherExamPage />}></Route>
+          <Route
+            path="/leave"
+            element={<LeaveFormPage user="teacher" />}
+          ></Route>
+          <Route path="/chat" element={<ChatPage user="teacher" />}></Route>
+          <Route
+            path="/timeTable"
+            element={<TimeTablePage user="principal" />}
+          ></Route>
         </Route>
 
-
-
-        {/* <Route path="/register" element={< TeacherSignUpPage />}></Route> */}
-        <Route path="/weeklyTasks" element={<TeacherWeeklyTasksPage />}></Route>
-        <Route path="/attandence" element={<TeacherAttadencePage />}></Route>
-        <Route
-          path="/reviews"
-          element={<TeacherComplaintsPage page="review" />}
-        ></Route>
-        <Route
-          path="/complaints"
-          element={<TeacherComplaintsPage page="complaint" />}
-        ></Route>
-        <Route path="/students" element={<TeacherStudentsPage />}></Route>
-        <Route path="/exams" element={<TeacherExamPage />}></Route>
-        <Route path="/leave" element={<LeaveFormPage user="teacher" />}></Route>
-        <Route path="/chat" element={<ChatPage user="teacher" />}></Route>
-        <Route
-          path="/timeTable"
-          element={<TimeTablePage user="principal" />}
-        ></Route>
-        <Route path="/*" element={<ErrorPage user="principal" />}></Route>
+          <Route path="/*" element={<ErrorPage user="principal" />}></Route>
+          
       </Routes>
     </div>
   );

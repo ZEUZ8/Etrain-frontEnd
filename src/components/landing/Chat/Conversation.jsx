@@ -20,8 +20,8 @@ const Conversation = ({ conversation, currentUser, loading,currentChat }) => {
   const [notify,setNotify] = useState(true);
   const [msg,setMsg] = useState('')
 
-  socket.current = io("https://etrain-z30o.onrender.com");
-  // const socket = io("http://localhost:4000");
+  // socket.current = io("https://etrain-z30o.onrender.com");
+  const socket = io("http://localhost:4000");
 
   useEffect(() => {
     const friendId = conversation?.members.find((m) => m !== currentUser.id);

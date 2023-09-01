@@ -6,6 +6,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import studentReducer from "./studentSlice"
 import principalReducer from "./principal"
 import teacherReducer from "./teacher"
+import authReducer from "./AuthSlice"
 
 
 const persistConfig = {key:'root',storage,version:1}
@@ -13,7 +14,8 @@ const persistConfig = {key:'root',storage,version:1}
 const reducer =  combineReducers({
         studentReducer,
         principalReducer,
-        teacherReducer
+        teacherReducer,
+        authReducer
     })
 
 

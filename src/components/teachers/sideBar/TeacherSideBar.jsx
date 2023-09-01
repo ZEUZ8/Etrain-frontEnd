@@ -17,10 +17,9 @@ const TeacherSideBar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const socket = io("https://etrain-z30o.onrender.com");
 
-  const socket = io("https://etrain-z30o.onrender.com");
-  // const socket = io("http://localhost:4000");
+  // const socket = io("https://etrain-z30o.onrender.com");
+  const socket = io("http://localhost:4000");
 
   const handleLogOut = () => {
     dispatch(teacherLogout());

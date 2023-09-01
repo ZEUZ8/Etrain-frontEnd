@@ -136,7 +136,7 @@ export const GetStudents = async(token)=>{
         return response.data
     }catch(error){
         console.log(error)
-        return(error.response.data)
+        return(error?.response?.data)
     }
 }
 
@@ -547,7 +547,7 @@ export const GetMonthlyAttendance = async(token)=>{
     };
     try{
         const response = await axiosTeacherInstance.get(`/monthlyAttendance`,config)
-        return(response.data)
+        return(response?.data)
     }catch(error){
         console.log(error)
         return(error.response.data)
