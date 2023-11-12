@@ -34,6 +34,7 @@ const PrincipalExam = () => {
     const fetchData = async () => {
       try {
         const response = await GetExam(token);
+        console.log(response,'  consoling in the frontend for the rsponse')
         if(response === "Access Denied" || response.message === "jwt malformed" || response.message === "jwt expired"){
           navigate("/principal/login")
         }else{
@@ -70,7 +71,6 @@ const PrincipalExam = () => {
   const handleUpdation = async(value)=>{
     try {
       const response = await UpdateExam(token, currentExam._id,value);
-      console.log(response.msg);
       if(errorMsgs.some((msg)=> msg === response.msg || response.message)){
         navigate("/principal/login")
       }else if (response.msg === "Exam Updated") {

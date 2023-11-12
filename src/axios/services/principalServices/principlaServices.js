@@ -5,9 +5,9 @@ import { axiosPrincipalInstance } from "../../axios";
 //principal service function for login
 export const principalLoginService = async (value) => {
   try {
-    const respons = await axiosPrincipalInstance.post("/login", value);
-    localStorage.setItem("principalToken", respons.data.token);
-    return respons.data;
+    const response = await axiosPrincipalInstance.post("/login", value);
+    localStorage.setItem("principalToken", response.data.token);
+    return response?.data;
   } catch (error) {
     return error;
   }
@@ -16,10 +16,10 @@ export const principalLoginService = async (value) => {
 //principal service function for login the teacher withe the google
 export const PrincipalGoogleLogin = async (email) => {
   try {
-    const respons = await axiosPrincipalInstance.post("/googleLogin", {
+    const response = await axiosPrincipalInstance.post("/googleLogin", {
       email,
     });
-    return respons.data;
+    return response?.data;
   } catch (error) {
     return error;
   }
@@ -29,7 +29,7 @@ export const PrincipalGoogleLogin = async (email) => {
 export const classCreation = async (token, value) => {
   try {
     const response = await axiosPrincipalInstance.post("/Class", value);
-    return response.data;
+    return response?.data;
   } catch (error) {
     return error;
   }
@@ -39,7 +39,7 @@ export const classCreation = async (token, value) => {
 export const UpdateClass = async (token, value, id) => {
   try {
     const response = await axiosPrincipalInstance.put(`/Class/${id}`, value);
-    return response.data;
+    return response?.data;
   } catch (error) {
     return error;
   }
@@ -52,21 +52,20 @@ export const classes = async (token) => {
     const respons = await axiosPrincipalInstance.get("/classes");
     return respons.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
-{
-  /*principal service function for adding a new teacher with specied emial and the 
+/*principal service function for adding a new teacher with specied emial and the 
 otp that created in the controller function 
 */
-}
+
 export const addNewTeacher = async (token, value) => {
   try {
-    const respons = await axiosPrincipalInstance.post("/teachers", value);
-    return respons.data;
+    const response = await axiosPrincipalInstance.post("/teachers", value);
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -77,7 +76,7 @@ export const teachers = async (token) => {
     const respons = await axiosPrincipalInstance.get("/teachers");
     return respons.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -88,7 +87,7 @@ export const availableTeachers = async (token) => {
     const respons = await axiosPrincipalInstance.get(`/availableTeacher`);
     return respons.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -98,7 +97,7 @@ export const updateTeacher = async (token, formData) => {
     const respons = await axiosPrincipalInstance.put("/teachers", formData);
     return respons.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -106,19 +105,20 @@ export const updateTeacher = async (token, formData) => {
 export const CreateExam = async (token, value) => {
   try {
     const response = await axiosPrincipalInstance.post("/exam", value);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
 //principal services function for finding all the exams goes here
 export const GetExam = async (token) => {
   try {
-    const response = await axiosPrincipalInstance.get("/exam");
-    return response.data;
+    const response = await axiosPrincipalInstance.get("/exm");
+    console.log(response , '   consoling in the service for the response')
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -126,9 +126,9 @@ export const GetExam = async (token) => {
 export const UpdateExam = async (token, id, value) => {
   try {
     const response = await axiosPrincipalInstance.put(`/exam/${id}`, value);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -136,7 +136,7 @@ export const UpdateExam = async (token, id, value) => {
 //
 //     try{
 //         const response = await axiosPrincipalInstance.post(`/verify/${id}`,value)
-//         return response.data
+//         return response?.data
 //     }catch(error){
 //
 //         return(error.message)
@@ -149,9 +149,9 @@ profile component
 export const GetPrincipal = async (token, id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/principal/${id}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -164,9 +164,9 @@ export const UpdatePrincipal = async (token, id, values) => {
       `/principal/${id}`,
       values
     );
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -174,9 +174,9 @@ export const UpdatePrincipal = async (token, id, values) => {
 export const GetLeaves = async (token) => {
   try {
     const response = await axiosPrincipalInstance.get("/leaves");
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -189,9 +189,9 @@ export const CreatePrincipalConversation = async (token, id, userId) => {
       `/conversation`,
       requestBody
     );
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -200,9 +200,9 @@ export const CreatePrincipalConversation = async (token, id, userId) => {
 export const GetPrincipalConversation = async (token, id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/conversation/${id}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -212,9 +212,9 @@ export const CreatePrincipalMessages = async (token, value) => {
   try {
     const response = await axiosPrincipalInstance.post(`/messages`, value);
 
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -223,9 +223,9 @@ export const CreatePrincipalMessages = async (token, value) => {
 export const GetPrincipalMessages = async (token, id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/messages/${id}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -234,9 +234,9 @@ export const GetPrincipalMessages = async (token, id) => {
 export const principalChatMember = async (token, id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/chatMember/${id}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -245,9 +245,9 @@ export const principalChatMember = async (token, id) => {
 export const PrincipalAllAttendance = async (token, date) => {
   try {
     const response = await axiosPrincipalInstance.get(`/attendance/${date}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -256,7 +256,7 @@ export const PrincipalAllAttendance = async (token, date) => {
 export const GetStudents = async (token, id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/students/${id}`);
-    return response.data;
+    return response?.data;
   } catch (error) {
     return error?.response?.data;
   }
