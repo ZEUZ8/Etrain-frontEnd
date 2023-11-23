@@ -53,7 +53,7 @@ const Chat = ({ user }) => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState("");
-
+  
   useEffect(() => {
     setCurrentUser(
       user === "student"

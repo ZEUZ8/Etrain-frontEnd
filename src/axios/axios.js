@@ -57,11 +57,19 @@ axiosStudentInstance.interceptors.request.use((req) => {
 const errMsgs = ["Access Denied", "jwt malformed", "jwt expired"];
 
 function handleResponse(res){
-    console.log(res,'  in the created funciton')
+  console.log(res)
+  if (errMsgs.some((msg) => msg === res.response.data )) {
+    res.response.data = "Access Denied"
+  }
+  return res
 }
 
-axiosPrincipalInstance.interceptors.response.use((res) => {
-    const config = handleResponse(res)
-    return config
+axiosPrincipalInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    const errorCheck = handleResponse(error)
+    return Promise.reject(errorCheck)
   }
 );

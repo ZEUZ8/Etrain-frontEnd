@@ -20,13 +20,12 @@ const EditClass = () => {
   const [students, setStudents] = useState([]);
   const [removeOn, setRemoveOn] = useState(false);
   const [update, setUpdate] = useState(false);
-  const errorMsgs = ["Access Decied", "jwt malformed", "jwt expired"];
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async function(){
       try {
         const response = await GetStudents(token, currentClass?._id);
-        if (errorMsgs.some((msg) => msg === response.msg || response.message)) {
+        if (response === "Access Denied") {
           navigate("/principal/login");
         } else {
           setStudents(response);
@@ -34,8 +33,8 @@ const EditClass = () => {
       } catch (err) {
         console.log(err);
       }
-    };
-    fetchData();
+    })()
+    // fetchData();
   }, []);
 
   return (
