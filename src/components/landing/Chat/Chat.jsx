@@ -46,14 +46,13 @@ const Chat = ({ user }) => {
   const [member, setMember] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const errMsgs = ["jwt expired", "Acces Denied", "jwt malformed"];
+
 
   const scrollRef = useRef();
   const socket = useRef();
-  const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState("");
-  
+
   useEffect(() => {
     setCurrentUser(
       user === "student"
@@ -67,23 +66,17 @@ const Chat = ({ user }) => {
         setLoading(true);
         if (user === "student") {
           const response = await GetStudent(studentToken, studentId);
-          if (errMsgs.some((msg) => msg === response.msg || response.message)) {
-            navigate("/login");
-          } else if (response.msg === "succesfull") {
+          if (response.msg === "succesfull") {
             setMember(response.student);
           }
         } else if (user === "teacher") {
           const response = await GetTeacher(teacherToken, teacherId);
-          if (errMsgs.some((msg) => msg === response.msg || response.message)) {
-            navigate("/login");
-          } else if (response.msg === "succesfull") {
+          if (response.msg === "succesfull") {
             setMember(response.teacher);
           }
         } else if (user === "principal") {
           const response = await GetPrincipal(principalToken, principalId);
-          if (errMsgs.some((msg) => msg === response.msg || response.message)) {
-            navigate("/login");
-          } else if (response.msg === "succesfull") {
+          if (response.msg === "succesfull") {
             setMember(response.principal);
           }
         }
@@ -94,7 +87,6 @@ const Chat = ({ user }) => {
     };
     fetchData();
   }, [user]);
-
 
   useEffect(() => {
     arrivalMessage &&
@@ -109,7 +101,6 @@ const Chat = ({ user }) => {
     socket.current.emit("addUser", currentUser.id);
     socket.current.on("getUsers", (users) => {});
   }, [currentUser]);
-
 
   useEffect(() => {
     socket.current.on("getMessage", (res) => {
@@ -146,8 +137,7 @@ const Chat = ({ user }) => {
     GetConversations();
   }, [user]);
 
-
-  console.log(conversations,' the converstaion in the result')
+  console.log(conversations, " the converstaion in the result");
 
   useEffect(() => {
     const getmsgs = async () => {
@@ -160,13 +150,12 @@ const Chat = ({ user }) => {
           principalToken,
           currentChat?._id
         );
-        console.log(response,'the principal chat')
+        console.log(response, "the principal chat");
       }
       setMessages(response);
     };
     getmsgs();
   }, [currentChat]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -193,7 +182,7 @@ const Chat = ({ user }) => {
       } else if (user === "teacher") {
         var response = await CreateTeacherMessages(teacherToken, message);
       } else {
-        var response = await CreatePrincipalMessages(principalToken,message)
+        var response = await CreatePrincipalMessages(principalToken, message);
       }
       setMessages([...messages, response]);
       setNewMessages("");

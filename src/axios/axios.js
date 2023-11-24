@@ -56,20 +56,39 @@ axiosStudentInstance.interceptors.request.use((req) => {
 
 const errMsgs = ["Access Denied", "jwt malformed", "jwt expired"];
 
-function handleResponse(res){
+function handleResponse(res, user) {
   console.log(res)
-  if (errMsgs.some((msg) => msg === res.response.data )) {
-    res.response.data = "Access Denied"
+  if (res.response.status === 403 || errMsgs.some((msg) => msg === res.response.data)) {
+    const loginPath = user === "student" ? "/login" : `/${user}/login`
+    window.location.replace(loginPath)
   }
-  return res
 }
 
+//axios response interceptor for handling the principal response error
 axiosPrincipalInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    const errorCheck = handleResponse(error)
-    return Promise.reject(errorCheck)
+    handleResponse(error, "principal");
+  }
+);
+
+//axios response interceptor for handling the student response errors
+axiosStudentInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => handleResponse(error, "student")
+);
+
+
+//axios response interceptor for handling the response errors for the teachers
+axiosTeacherInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    handleResponse(error, "teacher");
   }
 );

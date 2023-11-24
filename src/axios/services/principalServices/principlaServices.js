@@ -253,7 +253,7 @@ export const PrincipalAllAttendance = async (token, date) => {
 
 /* service function for getting students in the class  for principal
  */
-export const GetStudents = async (token, id) => {
+export const GetStudents = async (id) => {
   try {
     const response = await axiosPrincipalInstance.get(`/students/${id}`);
     return response?.data;

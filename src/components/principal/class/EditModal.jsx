@@ -32,7 +32,7 @@ const EditModal = ({
     const fetchData =  async ()=>{
       try{
         const respons = await classes(token)
-        if(respons == "Access Denied" || respons.message === "jwt malformed"){
+        if(respons == "Access Denied" ){
           navigate("/principal/login")
         }else {
           respons?.classes.filter(state=>{

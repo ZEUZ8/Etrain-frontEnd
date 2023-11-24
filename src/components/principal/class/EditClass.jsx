@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../../landing/loader/Loader";
-import { useSelector } from "react-redux";
 import { FiEdit } from "react-icons/fi";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -10,13 +9,9 @@ import EditModal from "./EditModal";
 import RemoveTeacher from "./RemoveTeacher";
 
 const EditClass = () => {
-  const pricnipalData = useSelector((state) => state.principalReducer);
-  const token = pricnipalData?.token;
-  const principalId = pricnipalData?.id;
 
   const location = useLocation();
   const currentClass = location.state.data;
-  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [removeOn, setRemoveOn] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -24,17 +19,12 @@ const EditClass = () => {
   useEffect(() => {
     (async function(){
       try {
-        const response = await GetStudents(token, currentClass?._id);
-        if (response === "Access Denied") {
-          navigate("/principal/login");
-        } else {
+        const response = await GetStudents(currentClass?._id);
           setStudents(response);
-        }
       } catch (err) {
         console.log(err);
       }
     })()
-    // fetchData();
   }, []);
 
   return (

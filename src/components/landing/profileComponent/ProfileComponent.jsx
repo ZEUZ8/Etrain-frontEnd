@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {FiEdit} from "react-icons/fi"
+import { FiEdit } from "react-icons/fi";
 
 import {
   GetTeacher,
@@ -47,23 +47,17 @@ const ProfileComponent = ({ user }) => {
     const fetchData = async () => {
       if (user === "teacher") {
         const response = await GetTeacher(teacherToken, teacherId);
-        if (errorMsgs.some((msg) => msg === response?.msg || response?.message)) {
-          navigate("/teacher/login");
-        } else if (response.msg === "succesfull") {
+        if (response.msg === "succesfull") {
           setTeacher(response?.teacher);
         }
       } else if (user === "student") {
         const response = await GetStudent(studentToken, studentId);
-        if (errorMsgs.some((msg) => msg === response.msg || response.message)) {
-          navigate("/login");
-        } else if (response.msg === "succesfull") {
+        if (response.msg === "succesfull") {
           setStudent(response?.student);
         }
       } else if (user === "principal") {
         const response = await GetPrincipal(principalToken, principalId);
-        if (errorMsgs.some((msg) => msg === response.msg || response.message)) {
-          navigate("/principal/login");
-        } else if (response?.msg === "succesfull") {
+        if (response?.msg === "succesfull") {
           setPrincipal(response?.principal);
         }
       }
@@ -82,18 +76,14 @@ const ProfileComponent = ({ user }) => {
     try {
       if (user === "teacher") {
         const response = await UpdateTeacher(teacherToken, teacherId, value);
-        if (errorMsgs.some((msg) => msg === response.msg)) {
-          navigate("/teacher/login");
-        } else if (response.msg === "succesfull") {
+        if (response.msg === "succesfull") {
           setTeacher(response.teacher);
           toast.success(response.msg);
           setIsOn(false);
         }
       } else if (user === "student") {
         const response = await UpdateStudent(studentToken, studentId, value);
-        if (errorMsgs.some((msg) => msg === response.msg)) {
-          navigate("/login");
-        } else if (response.msg === "succesfull") {
+        if (response.msg === "succesfull") {
           setStudent(response.student);
           toast.success(response.msg);
           setIsOn(false);
@@ -104,9 +94,7 @@ const ProfileComponent = ({ user }) => {
           principalId,
           value
         );
-        if (errorMsgs.some((msg) => msg === response.msg)) {
-          navigate("/principal/login");
-        } else if (response.msg === "succesfull") {
+        if (response.msg === "succesfull") {
           setPrincipal(response.principal);
           toast.success(response.msg);
           setIsOn(false);
@@ -194,7 +182,11 @@ const ProfileComponent = ({ user }) => {
           <div className="mr-10 flex justify-between w-max">
             <div className=" flex">
               <div className="mx-5 text-white sm:text-md md:text-2xl">
-                {user === "teacher" ? `${teacher?.class}${teacher?.division}`: user === "student" ? `${student?.studentClass}${student?.division}`: ""}
+                {user === "teacher"
+                  ? `${teacher?.class}${teacher?.division}`
+                  : user === "student"
+                  ? `${student?.studentClass}${student?.division}`
+                  : ""}
               </div>
             </div>
             <div>
